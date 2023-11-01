@@ -1,6 +1,8 @@
 Question 1: https://drive.google.com/file/d/1DPUA1NwPYbd4chJymADtNIcunBEo6HUf/view?usp=sharing
 Question 2: https://drive.google.com/file/d/1dYmsiopN6X1skS9oyfuwQ44Sm0CySbfZ/view?usp=sharing
+Question 3: https://drive.google.com/file/d/1miXjOLCYfLnXjPKt3IZVB3qhn-lqxgPo/view?usp=sharing
 
 md5sum output:
 201c79d0c7fd9ff2951cb24d6fa3f73c  ce441-hw1-1.mkv
 28722da9a43b4c37567139c9a9d38f90  ce441-hw1-2.mkv
+f01c37928b6098c2f15b4d411360b687  ce441-hw1-3.mkv
