@@ -83,7 +83,47 @@ $H(x) = H(y)$
     موجود است.
 \end{enumerate}
 \section{}
+در این حالت کافی است که عملا سه بار به توان برسانیم عدد را.
+فرض کنید که سه کامپیوتر وجود دارند در شبکه که سه عدد تصادفی و شخصی
+$A$ و $B$ و $C$
+را برای خودشان می‌سازند. سپس تمامی آن‌ها بر روی اعداد
+$q$ و $\alpha$
+مانند خود دیفی هلمن دو نفره توافق می‌کنند. سپس هر کدام به ترتیب
+$\alpha^A \mod q$ و $\alpha^B \mod q$ و $\alpha^C \mod q$.
+سپس هر یک این اعداد را برای کلاینت بعدی خودشان می‌فرستند و آن‌ها نیز عدد دریافتی را برای کلاینت‌های
+بعدی خودشان می‌فرستند. پس در حال حاضر اعداد هر کدام از کلاینت‌ها برابر است با:
+$\alpha^{CA} \mod q$ و $\alpha^{AB} \mod q$ و $\alpha^{BC} \mod q$.
+در نهایت یک بار دیگر نیز هر کدام از این اعداد باید به فرد بعدی فرستاده شود و در نهایت اعداد برابر می‌شوند با:
+$\alpha^{ABC} \mod q$ و $\alpha^{BCA} \mod q$ و $\alpha^{CBA} \mod q$.
+همان طور که می‌بینید تمامی اعداد یکسان شدند و نتیجه همان کلید ماست.
+
+\noindent
+\link{https://en.wikipedia.org/wiki/Diffie\%E2\%80\%93Hellman_key_exchange\#Operation_with_more_than_two_parties}{منبع}
 \section{}
+\begin{enumerate}
+    \item به صورت کلی یک سری کلید در این رمزنگاری وجود دارد که به آن‌ها \lr{weak keys} گفته می‌شود.
+    (\link{https://en.wikipedia.org/wiki/Weak_key\#Weak_keys_in_DES}{منبع 1} \link{https://crypto.stackexchange.com/q/12214}{منبع 2})
+    از آنجا که
+    \lr{DES} از \lr{Feistel Cipher} استفاده می‌کند،
+    در صورتی که کلید‌هایی که در
+    \lr{key scheduling}
+    تولید می‌شود طوری در بیاید که از اول به آخر و آخر به اول یکی باشند عملا الگوریتم
+    رمزگذاری و رمزگشایی یکی می‌شود. با توجه به ویکیپدیا این کلید‌ها خاصیت گفته شده را دارند:
+    \begin{latin}
+    \begin{lstlisting}
+0x0101010101010101
+0xFEFEFEFEFEFEFEFE
+0xE0E0E0E0F1F1F1F1
+0x1F1F1F1F0E0E0E0E
+0x0000000000000000
+0xFFFFFFFFFFFFFFFF
+0xE1E1E1E1F0F0F0F0
+0x1E1E1E1E0F0F0F0F
+\end{lstlisting}
+    \end{latin}
+    البته دوباره با توجه به ویکیپدیا فقط برخی از پیاده‌سازی‌های خاص باعث می‌شوند که چهار کلید آخر ویژگی گفته شده را داشته باشند.
+    \item % https://crypto.stackexchange.com/q/2060
+\end{enumerate}
 \section{}
 \section{}
 \end{document}
