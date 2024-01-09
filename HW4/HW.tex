@@ -140,6 +140,118 @@ gpg --import Reza_0xCFBEEE88_public.asc
 \lr{Virtualbox}
 وصل بودند. با این کار می‌توان که از هر کدام از ماشین مجازی‌ها دیگری را پینگ کرد.
 \section{}
+در ابتدا برای استفاده از
+\lr{TLS 1.2}
+من از دستور زیر در
+\lr{curl}
+استفاده کردم چرا که به نظر سوال برای \lr{TLS 1.2}
+طراحی شده است و اکثرا سایت‌ها در حال حاضر از
+\lr{TLS 1.3}
+استفاده می‌کنند.
+(\link{https://superuser.com/a/976171}{منبع})
+\begin{latin}
+\begin{lstlisting}[language=sh]
+curl --tlsv1.2 --tls-max 1.2 https://google.com
+\end{lstlisting}
+\end{latin}
+سپس به کمک
+\lr{wireshark}
+پکت‌های رد و بدل شده را بررسی کردم. فایل فیلتر شده پکت‌ها نیز به تمرین پیوست شده است.
+\subsection{}
+به ترتیب پکت‌ها و محتوای آن در زیر آمده است»
+\begin{enumerate}
+    \item از کامپیوتر من به سرور می‌رود و شامل \lr{Client Hello} است.
+    \item این پکت از سرور به کلاینت می‌آید و شامل \lr{Server Hello} است.
+    \item این پکت نیز از سرور به کلاینت می‌آید و شامل سه \lr{record} است. یکی از آنها شامل \lr{certificate} است، بعدی شامل \lr{server key exchange} است که پارامتر‌های دیفی هلمن فرستاده می‌شود و آخری \lr{server hello done} است.
+    \item این پکت از کامپیوتر من به سرور می‌رود و شامل سه \lr{record} است. یکی برای پارامتر‌های دیفی هلمن، دیگری برای \lr{change cipher spec} که بگویید به سرور که رمزنگاری شروع شود و آخری برای \lr{encrypted handshake message} که نشان دهیم که رمزگذاری می‌تواند انجام شود.
+    \item این پکت نیز از سرور به کلاینت می‌آید که سه \lr{record} دارد. اولی برای \lr{new session ticket} است که یک نشست جدید را مشخص می‌کند، دیگری برای \lr{change cipher spec} که بگویید به کلاینت که رمزنگاری شروع شود و آخری برای \lr{encrypted handshake message} که نشان دهیم که رمزگذاری می‌تواند انجام شود.
+    \item این پکت رمز شده از کلاینت به سرور می‌رود و احتمالا حاوی هدرهای HTTP است. اسم این پروتکل \lr{Application Data Protocol} است.
+    \item این بسته از سرور به کلاینت می‌رود و احتمالا حاوی هدر‌های HTTP جواب است.
+    \item این پکت نیز مانند پکت قبل است.
+\end{enumerate}
+در ادامه هر رکورد سه فیلد ثابت دارد.
+\begin{enumerate}
+    \item \textbf{\lr{Content Type}}: یک بایت است و مشخص می‌کند که این چه رکوردی است.
+    \item \textbf{\lr{Version}}: ورژن TLS است که دو بایت است و یک بایت برای major و دیگری برای minor است.
+    \item \textbf{\lr{Length}}: طول محتوای بسته که دو بایت است.
+\end{enumerate}
+\subsection{}
+در پکت اول
+\lr{content type} برابر ۲۲ یا \lr{Handshake} است.
+همچنین من حدس میزنم که در
+\lr{wireshark}
+مقدار
+\lr{nonce}
+همان فیلد
+\lr{Random}
+است. این فیلد در
+\lr{server hello}
+باید عینا بیاید و برای همین می‌توان تشخیص داد که
+\lr{replay attack}
+اتفاق نیفتاده است.
+(\link{https://security.stackexchange.com/a/157710}{منبع})
+همچنین
+\lr{cipher suite}های
+من در شکل زیر آمده است:
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{pics/tls-ciphers.jpg}
+    \caption{تمامی \lr{cipher suite}های این handshake}
+\end{figure}
+\subsection{}
+در کانکشن من \lr{cipher suite} برابر
+\lr{TLS ECDHE ECDSA WITH AES 128 GCM SHA256}
+است که از الگوریتم
+\lr{AES} ۱۲۸ بیتی استفاده می‌کند.
+همان طور که در قسمت قبل گفتم
+\lr{client random}
+عینا فرستاده می‌شود.
+\lr{Session ID}
+به ما این قابلیت را می‌دهد که یک
+\lr{Session}
+قبلی را ادامه دهد. یعنی تمامی الگوریتم و کلید‌ها و غیره همان قبلی هستد.
+(\link{https://security.stackexchange.com/a/190497}{منبع})
+در اینجا
+\lr{certificate}
+در رکورد و پکت دیگری فرستاده شده است.
+
+برای
+\lr{certificate}
+همان طور که در عکس زیر مشخص است کلید عمومی با الگوریتم
+\lr{secp256r1}
+است و طول کلید آن با توجه به اسم الگوریتم ۲۵۶ بیت است. خود
+\lr{certificate}
+نیز با الگوریتم
+\lr{RSA} و چکیده ساز \lr{SHA256}
+امضا شده است. خود گواهی نیز از طرف
+\lr{Google Trust Services LLC}
+امضا شده است.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{pics/tls-cert.jpg}
+    \caption{مقادیر مربوط به \lr{certificate}}
+\end{figure}
+\subsection{}
+برای من همچین فیلدی وجود ندارد.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{pics/tls-client-key-exchange.jpg}
+    \caption{پکت \lr{client key exchange}}
+\end{figure}
+اما من در
+\link{https://tls12.xargs.org/}{این سایت}
+نگاه کردم و دیدم که به نظر می‌آید که این یک فیلد نیست بلکه یک عملیات است که بر روی کلید عمومی
+سرور و کلید خصوصی خود کلاینت انجام می‌شود و باعث می‌شود که سرور و کلاینت به یک کلید مشترک برسند مثل دیفی هلمن.
+سپس با این کلید در رکورد‌های
+\lr{client handshake finished} و \lr{server handshake finished}
+هش تمامی پکت‌های قبلی حساب می‌شود و رمز می‌شود و همچنین مهم تر از آن کلید‌های رمزگذاری و مک زدن و غیره به کمک آن تولید می‌شود.
+\subsection{}
+خیر فرقی ندارد و صرفا به طرف مقابل می‌گوید که می‌توانیم پیام‌های رمزشده را شروع کنیم. پکت
+\lr{Encrypted Handshake}
+نیز برای فرستادن یک پیام رمزشده به سرور یا کلاینت استفاده می‌شود که طرف مقابل مطمئن باشد که
+رمزنگاری درست انجام شده است.
+\subsection{}
+به کمک کلید‌هایی که در قبل رد و بدل کردیم و الگوریتم‌هایی که توافق کردیم.
 \section{}
 \begin{enumerate}
     \item \link{https://superuser.com/a/634471}{منبع} \begin{latin}
