@@ -316,6 +316,15 @@ curl --tlsv1.2 --tls-max 1.2 https://google.com
     \includegraphics[scale=0.5]{pics/tls-ciphers.jpg}
     \caption{تمامی \lr{cipher suite}های این handshake}
 \end{figure}
+در اینجا مثلا در اولین سطر از
+\lr{Elliptic-curve Diffie-Hellman}
+برای تبادل کلید و امضا دیجیتال استفاده می‌شود و الگوریتم رمزنگاری متقارن
+\lr{AES 256 GCM}
+است که با
+\lr{GCM authenticity}
+را نیز داریم. همچنین تابع چکیده ساز
+\lr{SHA386}
+است.
 \subsection*{قسمت پ}
 در کانکشن من \lr{cipher suite} برابر
 \lr{TLS ECDHE ECDSA WITH AES 128 GCM SHA256}
