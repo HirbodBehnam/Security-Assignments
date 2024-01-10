@@ -5,8 +5,8 @@
 \begin{document}
 \printheader
 
-\section{}
-\subsection{}
+\section*{سوال اول}
+\subsection*{قسمت الف}
 یکی از کار‌هایی که می‌توان کرد این است یک تبادل کلید دیفی هلمن انجام گیرد به صورتی که تمامی
 پارامتر‌ها با کلید
 $K_{c,s}$
@@ -21,11 +21,11 @@ $K'$
 صرفا بین دو
 $C$ و $V$
 ساخته می‌شود و فقط این دو کلید را دارند.
-\subsection{}
+\subsection*{قسمت ب}
 همان طور که در قسمت قبل هم گفته شد در این صورت حمله مرد میانی می‌تواند صورت بگیرد چرا که خود
 $KDC$
 می‌تواند که پارامتر‌ها را امضا بکند.
-\subsection{}
+\subsection*{قسمت پ}
 به نظر من یکی از کار‌های نسبتا ساده‌ای که می‌توان انجام داد این است که یکی از طرفین کلید تصادفی
 $K'$
 را تولید کند و سپس آن را در ابتدا با
@@ -42,8 +42,8 @@ $KDC1$
 در نهایت نیز برای صحت ارسال می‌توان هم با
 $K_{c,s,1}$ و هم $K_{c,s,2}$
 کلید را امضا کرد و سپس آن را رمز کرد.
-\section{}
-\subsection{}
+\section*{سوال دوم}
+\subsection*{قسمت الف}
 برای ساخت کلید من از
 \link{https://irtfweb.ifa.hawaii.edu/~lockhart/gpg/}{این}
 لینک استفاده کردم. همان طور که مشخص است در ابتدا از دستور
@@ -54,7 +54,7 @@ $K_{c,s,1}$ و هم $K_{c,s,2}$
 موجود است.
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.5]{pics/gpg-keygen.jpg}
+    \includegraphics[scale=0.75]{pics/gpg-keygen.jpg}
     \caption{ساخت \lr{GPG key}}
     \label{fig:gpg:keygen}
 \end{figure}
@@ -75,7 +75,7 @@ gpg --export -a "hirbod.behnam@sharif.edu"
     \caption{مشاهده کلید‌های PGP}
     \label{fig:gpg:view}
 \end{figure}
-\subsection{}
+\subsection*{قسمت ب}
 در این قسمت در ابتدا نیاز است که کلید عمومی داده شده را
 import
 کنیم. برای این کار از دستور زیر استفاده می‌کنیم. نتیجه‌ی آن در عکس
@@ -98,7 +98,7 @@ gpg --import Reza_0xCFBEEE88_public.asc
 (\link{https://medium.com/@acparas/how-to-encrypt-and-sign-a-file-with-gpg-531070b2fa6d}{منبع})
 \begin{latin}
 \begin{lstlisting}[language=sh]
-    gpg --output email.pgp --armor --encrypt --sign --recipient reza.saeedi9@yahoo.com email-plaintext.txt
+gpg --output email.pgp --armor --encrypt --sign --recipient reza.saeedi9@yahoo.com email-plaintext.txt
 \end{lstlisting}
 \end{latin}
 همان طور که مشاهده می‌کنید محتوای فایل تولید شده رمزگذاری شده است.
@@ -120,26 +120,144 @@ gpg --import Reza_0xCFBEEE88_public.asc
     \caption{ایمیل فرستاده شده}
     \label{fig:gpg:email}
 \end{figure}
-\section{}
-\subsection{}
+\section*{سوال سوم}
+\subsection*{قسمت الف}
 \begin{itemize}
     \item \textbf{\lr{Bruteforce Attack}}: این حمله عملا سعی می‌کند که با حدس زدن کلید رمزنگاری رمزنگاری را بشکاند. به صورت صریح این مورد در درس ذکر نشده است اما من فکر می‌کنم که به صورت کلی نمی‌توان جلوی \lr{bruteforce} را گرفت اما می‌توان احتمال آن را کم کرد. به عنوان مثال می‌توان از الگوریتم‌های رمزنگاری قوی استفاده کرد.
     \item \textbf{\lr{Known Plaintext Attack}}: در این حمله مهاجم هم یک متن به صورت رمزگشایی شده را دارد و هم یک متن به صورت رمزشده را دارد. این نوع حمله نیز به کمک \lr{cipher} استفاده شده می‌تواند بی اثر شود.
     \item \textbf{\lr{Reply Attack}}: این حمله بدین صورت است که مهاجم یکی از پکت‌های قبلی کاربر را بدون تغییر به سرور می‌فرستد. این حمله به کمک استفاده از \lr{sequence number} و \lr{window} قابل جلوگیری است چرا که پیام‌هایی که در قبل دریافت شده‌اند را داریم و در صورت مشاهده‌ی یک پیام تکراری آن را دور می‌ریزیم.
-    \item \textbf{\lr{Password Sniffing}}:
-    \item \textbf{\lr{IP Spoofing}}: این حمله بدین صورت است که پکت‌هایی درست می‌کنیم که IP مبدا را عوض می‌کنیم و چیزی به غیر از آی‌پی واقعی خود قرار می‌دهیم. (\link{https://en.wikipedia.org/wiki/IP_address_spoofing}{منبع})
-    \item \textbf{\lr{IP Hijacking}}: این نوع حملات بدین صورت هستند که واقعا \lr{IP}هایی را در شبکه در اختیار می‌گیریم که برای ما نیست و دیتا‌هایی که برای ما نباید بیاید برای ما می‌آید.  (\link{https://www.oreilly.com/library/view/hackers-beware/0735710090/0735710090_ch05lev1sec1.html}{منبع})
-    \item \textbf{\lr{SYN Flooding}}: در این نوع حمله یک مهجام یک عالمه پکت \lr{SYN} که اولین پکت برای شروع یک کانکشن TCP است را برای یک سرور به تعداد زیادی می‌فرستد به طوری که IP مبدا آن برای شخص دیگر باشد. (\link{https://www.cloudflare.com/learning/ddos/syn-flood-ddos-attack/}{منبع})
+    \item \textbf{\lr{Password Sniffing}}: این حمله زمانی اتفاق می‌افتد که مثلا رمز یک سایت را به صورت \lr{plaintext} برای سرور ارسال کنیم و افرادی که به کانکشن ما گوش می‌کنند می‌توانند آن را ببنیند و ضبط کنند. اما \lr{IPSec} کار که می‌کند در مدل ESP این است که تمامی داده‌ها را رمز می‌کند پس دیگر نمی‌توان پسورد‌ها را بدست آورد.
+    \item \textbf{\lr{IP Spoofing}}: این حمله بدین صورت است که پکت‌هایی درست می‌کنیم که IP مبدا را عوض می‌کنیم و چیزی به غیر از آی‌پی واقعی خود قرار می‌دهیم. (\link{https://en.wikipedia.org/wiki/IP_address_spoofing}{منبع}) این مورد به کمک امضا‌هایی که در الگوریتم اتفاق می‌افتد خنثی می‌شود چرا که فرستند به کمک \lr{IP} خودش یک امضا می‌زند. پس اگر کسی دیگر بخواهد که \lr{IP} را عوض کند امضا را نیز باید بتواند عوض کند.
+    \item \textbf{\lr{IP Hijacking}}: این نوع حملات بدین صورت هستند که واقعا \lr{IP}هایی را در شبکه در اختیار می‌گیریم که برای ما نیست و دیتا‌هایی که برای ما نباید بیاید برای ما می‌آید.  (\link{https://www.oreilly.com/library/view/hackers-beware/0735710090/0735710090_ch05lev1sec1.html}{منبع}) نوع مقابله با این حمله نیز مانند قسمت قبل است. البته دقت کنید که اگر کامل \lr{redicet} صورت بگیرد فرد دیگر نمی‌تواند پکت‌ها را باز کند چرا که کلید‌ها را ندارد.
+    \item \textbf{\lr{SYN Flooding}}: در این نوع حمله یک مهجام یک عالمه پکت \lr{SYN} که اولین پکت برای شروع یک کانکشن TCP است را برای یک سرور به تعداد زیادی می‌فرستد به طوری که IP مبدا آن برای شخص دیگر باشد. (\link{https://www.cloudflare.com/learning/ddos/syn-flood-ddos-attack/}{منبع}) اما نکته‌ای که وجود دارد این است که IPSec صرفا اصالت و محرمانگی را برای ما تامین می‌کند. پس جلوی این حمله را نمی‌تواند بگیرد. (\link{https://security.stackexchange.com/a/177035}{منبع})
 \end{itemize}
-\subsection{}
+\subsection*{قسمت ب}
 در این قسمت من از دو ماشین مجازی
 \lr{Ubuntu 22.04}
 استفاده کردم که به یک اداپتور
 \lr{host only}
 در
 \lr{Virtualbox}
-وصل بودند. با این کار می‌توان که از هر کدام از ماشین مجازی‌ها دیگری را پینگ کرد.
-\section{}
+وصل بودند. با این کار می‌توان که از هر کدام از ماشین مجازی‌ها دیگری را پینگ کرد. اولین ماشین مجازی بروی روی
+\lr{192.168.207.4} است و دیگری بر روی \lr{192.168.207.5}
+است. در ادامه از آموزش در
+\link{https://www.gypthecat.com/ipsec-vpn-host-to-host-on-ubuntu-14-04-with-strongswan}{این لینک}
+استفاده می‌کنیم. در ابتدا باید
+\lr{strongswan}
+را نصب کنیم. برای این کار در
+\lr{Ubuntu}های
+نسخه‌های جدید از دستور زیر استفاده می‌کنیم.
+(\link{https://www.linode.com/docs/guides/strongswan-vpn-server-install/}{منبع})
+\begin{latin}
+\begin{lstlisting}[language=sh]
+apt install strongswan strongswan-pki libcharon-extra-plugins libcharon-extauth-plugins libstrongswan-extra-plugins libtss2-tcti-tabrmd0
+\end{lstlisting}
+\end{latin}
+سپس فایل
+\LRE{\verb|/etc/ipsec.conf|}
+را ویرایش می‌کنیم و محتوای آن را در ماشین مجازی با آی‌پی
+\lr{192.168.207.4}
+برابر زیر قرار می‌دهیم:
+\begin{latin}
+\begin{lstlisting}[language=sh]
+config setup
+
+conn first-server
+    authby=secret
+    auto=route
+    keyexchange=ike
+    left=192.168.207.4
+    right=192.168.207.5
+    type=transport
+    esp=aes128gcm16!
+\end{lstlisting}
+\end{latin}
+همچنین در فایل
+\LRE{\verb|/etc/ipsec.secrets|}
+مقدار زیر را قرار می‌دهیم:
+\begin{latin}
+\begin{lstlisting}[language=sh]
+192.168.207.4 192.168.207.5 : PSK "My Password"
+\end{lstlisting}
+\end{latin}
+حال دو دستور زیر را اجرا می‌کنیم و نتیجه آن‌ها را بررسی می‌کنیم.
+\begin{latin}
+\begin{lstlisting}[language=sh]
+ipsec restart
+ipsec statusall
+\end{lstlisting}
+\end{latin}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{pics/ipsec-stat1.jpg}
+    \caption{وضعیت strongswan در سرور اول}
+\end{figure}
+حال برای سرور دوم نیز همین کارها را انجام می‌دهیم با این تفاوت که جای آی‌پی‌ها را عوض می‌کنیم.
+یعنی فایل
+\LRE{\verb|/etc/ipsec.conf|}
+به صورت زیر است:
+\begin{latin}
+\begin{lstlisting}[language=sh]
+config setup
+
+conn second-server
+    authby=secret
+    auto=route
+    keyexchange=ike
+    left=192.168.207.5
+    right=192.168.207.4
+    type=transport
+    esp=aes128gcm16!
+\end{lstlisting}
+\end{latin}
+و فایل
+\LRE{\verb|/etc/ipsec.secrets|}
+به صورت زیر:
+\begin{latin}
+\begin{lstlisting}[language=sh]
+192.168.207.5 192.168.207.4 : PSK "My Password"
+\end{lstlisting}
+\end{latin}
+در نهایت نیز دو دستور آخر را اجرا می‌کنیم:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{pics/ipsec-stat2.jpg}
+    \caption{وضعیت strongswan در سرور دوم}
+\end{figure}
+حال از یکی از سرور‌ها دیگری را پینگ می‌کنیم و وضعیت
+\lr{IPSec}
+را چک می‌کنیم. همان طور که مشاهده می‌کنید تعداد پکت‌های دریافتی زیاد می‌شود.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.32]{pics/ipsec-ping.jpg}
+    \caption{پینگ کردن از یک سرور به سرور دیگر}
+\end{figure}
+همچنین در نهایت نیز پکت‌ها را به کمک
+\lr{tcpdump}
+بررسی می‌کنیم. برای این کار از دستور زیر استفاده می‌کنیم که پکت‌هایی که از آن یکی
+\lr{VM}
+می‌آید را
+\lr{capture}
+کنیم.
+\begin{latin}
+\begin{lstlisting}[language=sh]
+tcpdump -i enp0s8 src 192.168.207.5 -w ipsec.pcap
+\end{lstlisting}
+\end{latin}
+سپس فایل
+\verb|ipsec.pcap|
+را با
+\lr{wireshark}
+باز می‌کنیم.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{pics/ipsec-pcap.jpg}
+    \caption{مشاهده پکت‌های \lr{ipsec} در \lr{wireshark}}
+\end{figure}
+فایل
+\verb|ipsec.pcap|
+نیز به تمرین پیوست شده است.
+\section*{سوال چهارم}
 در ابتدا برای استفاده از
 \lr{TLS 1.2}
 من از دستور زیر در
@@ -157,7 +275,7 @@ curl --tlsv1.2 --tls-max 1.2 https://google.com
 سپس به کمک
 \lr{wireshark}
 پکت‌های رد و بدل شده را بررسی کردم. فایل فیلتر شده پکت‌ها نیز به تمرین پیوست شده است.
-\subsection{}
+\subsection*{قسمت الف}
 به ترتیب پکت‌ها و محتوای آن در زیر آمده است»
 \begin{enumerate}
     \item از کامپیوتر من به سرور می‌رود و شامل \lr{Client Hello} است.
@@ -175,7 +293,7 @@ curl --tlsv1.2 --tls-max 1.2 https://google.com
     \item \textbf{\lr{Version}}: ورژن TLS است که دو بایت است و یک بایت برای major و دیگری برای minor است.
     \item \textbf{\lr{Length}}: طول محتوای بسته که دو بایت است.
 \end{enumerate}
-\subsection{}
+\subsection*{قسمت ب}
 در پکت اول
 \lr{content type} برابر ۲۲ یا \lr{Handshake} است.
 همچنین من حدس میزنم که در
@@ -198,7 +316,7 @@ curl --tlsv1.2 --tls-max 1.2 https://google.com
     \includegraphics[scale=0.5]{pics/tls-ciphers.jpg}
     \caption{تمامی \lr{cipher suite}های این handshake}
 \end{figure}
-\subsection{}
+\subsection*{قسمت پ}
 در کانکشن من \lr{cipher suite} برابر
 \lr{TLS ECDHE ECDSA WITH AES 128 GCM SHA256}
 است که از الگوریتم
@@ -231,8 +349,8 @@ curl --tlsv1.2 --tls-max 1.2 https://google.com
     \includegraphics[scale=0.5]{pics/tls-cert.jpg}
     \caption{مقادیر مربوط به \lr{certificate}}
 \end{figure}
-\subsection{}
-برای من همچین فیلدی وجود ندارد.
+\subsection*{قسمت ت}
+برای من همچین فیلدی وجود ندارد!
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.5]{pics/tls-client-key-exchange.jpg}
@@ -245,14 +363,14 @@ curl --tlsv1.2 --tls-max 1.2 https://google.com
 سپس با این کلید در رکورد‌های
 \lr{client handshake finished} و \lr{server handshake finished}
 هش تمامی پکت‌های قبلی حساب می‌شود و رمز می‌شود و همچنین مهم تر از آن کلید‌های رمزگذاری و مک زدن و غیره به کمک آن تولید می‌شود.
-\subsection{}
+\subsection*{قسمت ث}
 خیر فرقی ندارد و صرفا به طرف مقابل می‌گوید که می‌توانیم پیام‌های رمزشده را شروع کنیم. پکت
 \lr{Encrypted Handshake}
 نیز برای فرستادن یک پیام رمزشده به سرور یا کلاینت استفاده می‌شود که طرف مقابل مطمئن باشد که
 رمزنگاری درست انجام شده است.
-\subsection{}
+\subsection*{قسمت ج}
 به کمک کلید‌هایی که در قبل رد و بدل کردیم و الگوریتم‌هایی که توافق کردیم.
-\section{}
+\section*{سوال پنجم}
 \begin{enumerate}
     \item \link{https://superuser.com/a/634471}{منبع} \begin{latin}
 \begin{lstlisting}[language=sh]
